@@ -1,0 +1,169 @@
+name: Autograding Tests
+'on':
+  - push
+  - repository_dispatch
+
+permissions:
+  checks: write
+  actions: read
+  contents: read
+
+jobs:
+  run-autograding-tests:
+    runs-on: ubuntu-latest
+    if: github.actor != 'github-classroom[bot]'
+
+    steps:
+      - name: Checkout code
+        uses: actions/checkout@v4
+
+      # -------- TEST 01 --------
+      - name: minimalExamQuestionPrint01
+        id: minimalexamquestionprint01
+        uses: classroom-resources/autograding-command-grader@v1
+        with:
+          test-name: minimalExamQuestionPrint01
+          setup-command: ''
+          command: gradle test --tests TestMain.minimalExamQuestionPrint01
+          timeout: 10
+          max-score: 1
+
+      # -------- TEST 02 --------
+      - name: onlyHistorySorting02
+        id: onlyhistorysorting02
+        uses: classroom-resources/autograding-command-grader@v1
+        with:
+          test-name: onlyHistorySorting02
+          setup-command: ''
+          command: gradle test --tests TestMain.onlyHistorySorting02
+          timeout: 10
+          max-score: 2
+
+      # -------- TEST 03 --------
+      - name: onlyPrintExamSorting03
+        id: onlyprintexamsorting03
+        uses: classroom-resources/autograding-command-grader@v1
+        with:
+          test-name: onlyPrintExamSorting03
+          setup-command: ''
+          command: gradle test --tests TestMain.onlyPrintExamSorting03
+          timeout: 10
+          max-score: 2
+
+      # -------- TEST 04 --------
+      - name: simpleSubmission04
+        id: simplesubmission04
+        uses: classroom-resources/autograding-command-grader@v1
+        with:
+          test-name: simpleSubmission04
+          setup-command: ''
+          command: gradle test --tests TestMain.simpleSubmission04
+          timeout: 10
+          max-score: 3
+
+      # -------- TEST 05 --------
+      - name: simpleException05
+        id: simpleexception05
+        uses: classroom-resources/autograding-command-grader@v1
+        with:
+          test-name: simpleException05
+          setup-command: ''
+          command: gradle test --tests TestMain.simpleException05
+          timeout: 10
+          max-score: 2
+
+      # -------- TEST 06 --------
+      - name: multipleCallsAddPrint06
+        id: multiplecallsaddprint06
+        uses: classroom-resources/autograding-command-grader@v1
+        with:
+          test-name: multipleCallsAddPrint06
+          setup-command: ''
+          command: gradle test --tests TestMain.multipleCallsAddPrint06
+          timeout: 10
+          max-score: 4
+
+      # -------- TEST 07 --------
+      - name: largeTestSingleExam07
+        id: largetestsingleexam07
+        uses: classroom-resources/autograding-command-grader@v1
+        with:
+          test-name: largeTestSingleExam07
+          setup-command: ''
+          command: gradle test --tests TestMain.largeTestSingleExam07
+          timeout: 10
+          max-score: 4
+
+      # -------- TEST 08 --------
+      - name: largeTestManyExamStudents08
+        id: largetestmanyexamstudents08
+        uses: classroom-resources/autograding-command-grader@v1
+        with:
+          test-name: largeTestManyExamStudents08
+          setup-command: ''
+          command: gradle test --tests TestMain.largeTestManyExamStudents08
+          timeout: 10
+          max-score: 5
+
+      # -------- TEST 09 --------
+      - name: largeTestManyExamStudents09
+        id: largetestmanyexamstudents09
+        uses: classroom-resources/autograding-command-grader@v1
+        with:
+          test-name: largeTestManyExamStudents09
+          setup-command: ''
+          command: gradle test --tests TestMain.largeTestManyExamStudents09
+          timeout: 10
+          max-score: 5
+
+      # -------- TEST 10 --------
+      - name: largeTestManyExamStudents10
+        id: largetestmanyexamstudents10
+        uses: classroom-resources/autograding-command-grader@v1
+        with:
+          test-name: largeTestManyExamStudents10
+          setup-command: ''
+          command: gradle test --tests TestMain.largeTestManyExamStudents10
+          timeout: 10
+          max-score: 8
+
+      # -------- TEST 11 --------
+      - name: twoReportsSameExam11
+        id: tworeportssameexam11
+        uses: classroom-resources/autograding-command-grader@v1
+        with:
+          test-name: twoReportsSameExam11
+          setup-command: ''
+          command: gradle test --tests TestMain.twoReportsSameExam11
+          timeout: 10
+          max-score: 6
+
+      # -------- TEST 12 --------
+      - name: mixedCommands12
+        id: mixedcommands12
+        uses: classroom-resources/autograding-command-grader@v1
+        with:
+          test-name: mixedCommands12
+          setup-command: ''
+          command: gradle test --tests TestMain.mixedCommands
+          timeout: 10
+          max-score: 8
+
+      # -------- REPORTER --------
+      - name: Autograding Reporter
+        uses: classroom-resources/autograding-grading-reporter@v1
+        env:
+          MINIMALEXAMQUESTIONPRINT01_RESULTS: "${{steps.minimalexamquestionprint01.outputs.result}}"
+          ONLYHISTORYSORTING02_RESULTS: "${{steps.onlyhistorysorting02.outputs.result}}"
+          ONLYPRINTEXAMSORTING03_RESULTS: "${{steps.onlyprintexamsorting03.outputs.result}}"
+          SIMPLESUBMISSION04_RESULTS: "${{steps.simplesubmission04.outputs.result}}"
+          SIMPLEEXCEPTION05_RESULTS: "${{steps.simpleexception05.outputs.result}}"
+          MULTIPLECALLSADDPRINT06_RESULTS: "${{steps.multiplecallsaddprint06.outputs.result}}"
+          LARGETESTSINGLEEXAM07_RESULTS: "${{steps.largetestsingleexam07.outputs.result}}"
+          LARGETESTMANYEXAMSTUDENTS08_RESULTS: "${{steps.largetestmanyexamstudents08.outputs.result}}"
+          LARGETESTMANYEXAMSTUDENTS09_RESULTS: "${{steps.largetestmanyexamstudents09.outputs.result}}"
+          LARGETESTMANYEXAMSTUDENTS10_RESULTS: "${{steps.largetestmanyexamstudents10.outputs.result}}"
+          TWOREPORTSSAMEEXAM11_RESULTS: "${{steps.tworeportssameexam11.outputs.result}}"
+          MIXEDCOMMANDS12_RESULTS: "${{steps.mixedcommands12.outputs.result}}"
+        with:
+          runners: minimalexamquestionprint01,onlyhistorysorting02,onlyprintexamsorting03,simplesubmission04,simpleexception05,multiplecallsaddprint06,largetestsingleexam07,largetestmanyexamstudents08,largetestmanyexamstudents09,largetestmanyexamstudents10,tworeportssameexam11,mixedcommands12
