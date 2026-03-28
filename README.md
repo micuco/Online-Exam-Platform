@@ -6,7 +6,7 @@ This project is an implementation of a simplified online examination platform.
 
 The application simulates a system similar to Moodle, capable of managing exams, questions, students, and evaluations.
 
-It processes commands from input files and executes them in chronological order, generating output files with the results. :contentReference[oaicite:0]{index=0}
+It processes commands from input files and executes them in chronological order, generating output files with the results.
 
 ## Features
 
@@ -39,6 +39,3 @@ It processes commands from input files and executes them in chronological order,
 
 Run the main class with the test folder name as argument. The program reads commands from input files and writes results to output files.
 
-## Notes
-
-The project follows the assignment requirements and focuses on clean object-oriented design and correct use of collections and generics.
